@@ -93,18 +93,18 @@ export class MouseInputSource {
 
     private _registerEvent () {
         // register mouse down event
-        window.addEventListener('pointerdown', () => {
+        window.addEventListener('mousedown', () => {
             this._isPressed = true;
         });
-        this._canvas?.addEventListener('pointerdown', this._createCallback(InputEventType.MOUSE_DOWN));
+        this._canvas?.addEventListener('mousedown', this._handleMouseDown);
 
         // register mouse move event
-        this._canvas?.addEventListener('pointermove', this._createCallback(InputEventType.MOUSE_MOVE));
+        this._canvas?.addEventListener('mousemove', this._handleMouseMove);
 
         // register mouse up event
-        const handleMouseUp = this._createCallback(InputEventType.MOUSE_UP);
-        window.addEventListener('pointerup', handleMouseUp);
-        this._canvas?.addEventListener('pointerup', handleMouseUp);
+        const handleMouseUp = this._handleMouseUp;
+        window.addEventListener('mouseup', handleMouseUp);
+        this._canvas?.addEventListener('mouseup', handleMouseUp);
 
         // register wheel event
         this._canvas?.addEventListener('wheel', this._handleMouseWheel.bind(this));
@@ -130,9 +130,9 @@ export class MouseInputSource {
     }
 
     private _createCallback (eventType: InputEventType) {
-        return (mouseEvent: MouseEvent) => {
-            const location = this._getLocation(mouseEvent);
-            const { button, buttons } = mouseEvent;
+        return (pointerEvent: MouseEvent) => {
+            const location = this._getLocation(pointerEvent);
+            const { button, buttons } = pointerEvent;
             let targetButton = button;
             switch (eventType) {
             case InputEventType.MOUSE_DOWN:
