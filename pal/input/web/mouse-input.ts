@@ -162,14 +162,14 @@ export class MouseInputSource {
             const eventMouse = new EventMouse(eventType, false, this._preMousePos);
             eventMouse.setLocation(location.x, location.y);
             eventMouse.setButton(targetButton);
-            eventMouse.movementX = mouseEvent.movementX;
-            eventMouse.movementY = mouseEvent.movementY;
+            eventMouse.movementX = pointerEvent.movementX;
+            eventMouse.movementY = pointerEvent.movementY;
 
             // update previous mouse position.
             this._preMousePos.set(location.x, location.y);
-            mouseEvent.stopPropagation();
-            if (mouseEvent.target === this._canvas) {
-                mouseEvent.preventDefault();
+            pointerEvent.stopPropagation();
+            if (pointerEvent.target === this._canvas) {
+                pointerEvent.preventDefault();
             }
             this._eventTarget.emit(eventType, eventMouse);
         };
