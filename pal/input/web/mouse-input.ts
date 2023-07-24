@@ -103,8 +103,8 @@ export class MouseInputSource {
 
         // register mouse up event
         const handleMouseUp = this._handleMouseUp;
-        window.addEventListener('pointerup', handleMouseUp);
-        this._canvas?.addEventListener('pointerup', handleMouseUp);
+        window.addEventListener('mouseup', handleMouseUp);
+        this._canvas?.addEventListener('mouseup', handleMouseUp);
 
         // register wheel event
         this._canvas?.addEventListener('wheel', this._handleMouseWheel.bind(this));
@@ -130,7 +130,7 @@ export class MouseInputSource {
     }
 
     private _createCallback (eventType: InputEventType) {
-        return (pointerEvent: PointerEvent) => {
+        return (pointerEvent: MouseEvent) => {
             const location = this._getLocation(pointerEvent);
             const { button, buttons } = pointerEvent;
             let targetButton = button;
