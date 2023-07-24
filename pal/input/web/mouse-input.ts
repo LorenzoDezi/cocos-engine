@@ -130,9 +130,9 @@ export class MouseInputSource {
     }
 
     private _createCallback (eventType: InputEventType) {
-        return (pointerEvent: MouseEvent) => {
-            const location = this._getLocation(pointerEvent);
-            const { button, buttons } = pointerEvent;
+        return (mouseEvent: MouseEvent) => {
+            const location = this._getLocation(mouseEvent);
+            const { button, buttons } = mouseEvent;
             let targetButton = button;
             switch (eventType) {
             case InputEventType.MOUSE_DOWN:
