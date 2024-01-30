@@ -40,11 +40,11 @@ export class MouseInputSource {
     private _preMousePos: Vec2 = new Vec2();
 
     // @ts-expect-error maybe not initialized
-    private _handleMouseDown: (event: MouseEvent) => void;
+    private _handleMouseDown: (event: PointerEvent) => void;
     // @ts-expect-error maybe not initialized
-    private _handleMouseMove: (event: MouseEvent) => void;
+    private _handleMouseMove: (event: PointerEvent) => void;
     // @ts-expect-error maybe not initialized
-    private _handleMouseUp: (event: MouseEvent) => void;
+    private _handleMouseUp: (event: PointerEvent) => void;
 
     constructor () {
         if (systemInfo.hasFeature(Feature.EVENT_MOUSE)) {
@@ -96,15 +96,14 @@ export class MouseInputSource {
         window.addEventListener('mousedown', () => {
             this._isPressed = true;
         });
-        this._canvas?.addEventListener('mousedown', this._handleMouseDown);
+        this._canvas?.addEventListener('pointerdown', this._handleMouseDown);
 
         // register mouse move event
-        this._canvas?.addEventListener('mousemove', this._handleMouseMove);
+        this._canvas?.addEventListener('pointermove', this._handleMouseMove);
 
         // register mouse up event
         const handleMouseUp = this._handleMouseUp;
-        window.addEventListener('mouseup', handleMouseUp);
-        this._canvas?.addEventListener('mouseup', handleMouseUp);
+        this._canvas?.addEventListener('pointerup', handleMouseUp);
 
         // register wheel event
         this._canvas?.addEventListener('wheel', this._handleMouseWheel.bind(this));
@@ -130,7 +129,7 @@ export class MouseInputSource {
     }
 
     private _createCallback (eventType: InputEventType) {
-        return (pointerEvent: MouseEvent) => {
+        return (pointerEvent: PointerEvent) => {
             const location = this._getLocation(pointerEvent);
             const { button, buttons } = pointerEvent;
             let targetButton = button;
